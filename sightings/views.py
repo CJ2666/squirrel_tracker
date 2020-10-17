@@ -55,6 +55,7 @@ def stats(request):
     squirrels = Sight.objects.all()
     squirrel_count = len(squirrels)
     adult = Sight.objects.filter(Age='Adult').aggregate(Count('Unique_Squirrel_ID'))['Unique_Squirrel_ID_count']
+    juvenile = Sight.objects.filter(Age='Juvenile').aggregate(Count('Unique_Squirrel_ID'))['Unique_Squirrel_ID_count']
     am_shift = Sight.objects.filter(Shift='AM').aggregate(Count('Unique_Squirrel_ID'))['Unique_Squirrel_ID_count']
     pm_shift = Sight.objects.filter(Shift='PM').aggregate(Count('Unique_Squirrel_ID'))['Unique_Squirrel_ID_count']
     running = Sight.objects.filter(Running=True).aggregate(Count('Unique_Squirrel_ID'))['Unique_Squirrel_ID_count']
@@ -69,6 +70,7 @@ def stats(request):
     context = {
         'Total': squirrel_count,
         'Adult Squirrels': adult,
+        'juvenile Squirrels': juvenile,
         'AM Shifts': am_shift,
         'PM Shifts':pm_shift,
         'Running Squirrels':running,
