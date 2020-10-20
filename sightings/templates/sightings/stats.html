@@ -1,14 +1,50 @@
 <!doctype html>
 <html>
   <head>
-    <h1>Some Stats of Squirrels</h1>
+    <title>Stats</title>
+    <h1>Some Statistics of Squirrels</h1>
   </head>
-
+  <style>
+    body{
+	 }
+    li{list-style-type:none;}
+  </style>
   <body>
     <ul>
+	    <li>Total count of squirrels: {{Total}}</li><br>	    
       <li>Count of squirrels based on the time of sighting session occurred</li>
         <ul>
-          <li>Morning: {{AM_count}}</li>
-
+          <li>Morning: {{am_shift}}</li>
+          <li>Afternoon: {{pm_shift}}</li>
+	</ul>
+      <br>
+      <li> Count of squirrels based on growth stages </li>
+        <ul>
+          <li>Adult: {{adult}}</li>
+          <li>Juvenile: {{juvenile}}</li>
+        </ul>
+      <br>	
+      <li> Count of squirrels based on different acts</li>
+	<ul>
+          <li>Running: {{running}}</li>
+          <li>Climbing: {{climbing}}</li>
+	  <li>Eating: {{eating}}</li>
+	  <li>Foraging: {{foraging}}</li>
+        </ul>
+      <br>	
+      <li> Count of squirrels based on different sounds</li>
+        <ul>
+          <li>Kuks: {{kuks}}</li>
+          <li>Quaas: {{quaas}}</li>
+          <li>Moans: {{moans}}</li>
+        </ul>
+      <br>	 
+      <li> Count of squirrels based on tail states </li>
+        <ul>
+          <li>Flagging tail: {{tail_flags}}</li>
+          <li>Twitching tail: {{tail_twitches}}</li>
+        </ul>
+      <br>	
+    </ul>	
   </body>
 </html>

@@ -13,7 +13,7 @@ class Sight(models.Model):
     Unique_Squirrel_Id = models.CharField(
             help_text = _('The unique ID of the squirrel'),
             max_length = 100,
-            unique = True,
+            unique=True,
             blank = False
             )
     AM = 'AM'

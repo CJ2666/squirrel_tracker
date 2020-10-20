@@ -2,6 +2,8 @@ from django.shortcuts import render
 from .models import Sight
 from django.shortcuts import redirect,get_object_or_404
 from .forms import SightForm
+from django.db.models import Avg, Max, Min, Count
+
 # Create your views here.
 
 def homepage(request):
@@ -21,7 +23,7 @@ def sighting(request):
             'squirrels': squirrel,
             'fields':fields
         }
-    return render(request, 'sightings/list.html',context)
+    return render(request, 'sightings/sightings.html',context)
 
 def add_squirrel(request):
     if request.method == "POST":
@@ -52,35 +54,65 @@ def update(request,Unique_Squirrel_Id):
     return render(request, 'sightings/update.html', context)
 
 def stats(request):
-    squirrels = Sight.objects.all()
-    squirrel_count = len(squirrels)
-    adult = Sight.objects.filter(Age='Adult').aggregate(Count('Unique_Squirrel_ID'))['Unique_Squirrel_ID_count']
-    juvenile = Sight.objects.filter(Age='Juvenile').aggregate(Count('Unique_Squirrel_ID'))['Unique_Squirrel_ID_count']
-    am_shift = Sight.objects.filter(Shift='AM').aggregate(Count('Unique_Squirrel_ID'))['Unique_Squirrel_ID_count']
-    pm_shift = Sight.objects.filter(Shift='PM').aggregate(Count('Unique_Squirrel_ID'))['Unique_Squirrel_ID_count']
-    running = Sight.objects.filter(Running=True).aggregate(Count('Unique_Squirrel_ID'))['Unique_Squirrel_ID_count']
-    climbing = Sight.objects.filter(Climbing=True).aggregate(Count('Unique_Squirrel_ID'))['Unique_Squirrel_ID_count']
-    eating = Sight.objects.filter(Eating=True).aggregate(Count('Unique_Squirrel_ID'))['Unique_Squirrel_ID_count']
-    foraging = Sight.objects.filter(Foraging=True).aggregate(Count('Unique_Squirrel_ID'))['Unique_Squirrel_ID_count']
-    kuks = Sight.objects.filter(Kuks=True).aggregate(Count('Unique_Squirrel_ID'))['Unique_Squirrel_ID_count']
-    quaas = Sight.objects.filter(Quaas=True).aggregate(Count('Unique_Squirrel_ID'))['Unique_Squirrel_ID_count']
-    moans = Sight.objects.filter(Moans=True).aggregate(Count('Unique_Squirrel_ID'))['Unique_Squirrel_ID_count']
-    tail_flags = Sight.objects.filter(Tail_Flags=True).aggregate(Count('Unique_Squirrel_ID'))['Unique_Squirrel_ID_count']
-    tail_twitches = Sight.objects.filter(Tail_Twitches=True).aggregate(Count('Unique_Squirrel_ID'))['Unique_Squirrel_ID_count']
+    squirrels= Sight.objects.all()
+    Total = len(squirrels)
+    AM_shift = 0
+    PM_shift = 0
+    adult = 0
+    juvenile = 0
+    running = 0
+    climbing = 0
+    eating = 0
+    foraging = 0
+    kuks = 0
+    quaas = 0
+    moans = 0
+    tail_flags = 0
+    tail_switches = 0
+
+    for squirrel in squirrels:
+        if squirrel.Shift == 'AM':
+            AM_shift += 1
+        if squirrel.Shift == 'PM':
+            PM_shift += 1
+        if squirrel.Age == 'Adult':
+            adult += 1
+        if squirrel.Age == 'Juvenile':
+            juvenile += 1
+        if squirrel.Running == True:
+            running +=1
+        if squirrel.Climbing== True:
+            climbing +=1
+        if squirrel.Eating == True:
+            eating += 1
+        if squirrel.Foraging == True:
+            foraging += 1
+        if squirrel.Kuks == True:
+            kuks += 1
+        if squirrel.Quaas == True:
+            quaas += 1
+        if squirrel.Moans == True:
+            moans += 1
+        if squirrel.Tail_Flags == True:
+            tail_flags += 1
+        if squirrel.Tail_Twitches == True:
+            tail_switches += 1
+
     context = {
-        'Total': squirrel_count,
-        'Adult Squirrels': adult,
-        'juvenile Squirrels': juvenile,
-        'AM Shifts': am_shift,
-        'PM Shifts':pm_shift,
-        'Running Squirrels':running,
-        'Climbing Squirrels': climbing,
-        'Eating Squirrels': eating,
-        'Foraging Squirrels': foraging,
-        'Squirrels with Kuks': kuks,
-        'Squirrels with Quaas': quaas,
-        'Squirrels with Moans': moans,
-        'Squirrels with flagging tail': tail_flags,
-        'Squirrels with twitching tail': tail_twitch
+        'Total': Total,
+        'adult': adult,
+        'juvenile': juvenile,
+        'AM_shift': AM_shift,
+        'PM_shift': PM_shift,
+        'running': running,
+        'climbing': climbing,
+        'eating': eating,
+        'foraging': foraging,
+        'kuks': kuks,
+        'quaas': quaas,
+        'moans': moans,
+        'tail_flags': tail_flags,
+        'tail_twitches': tail_twitches,
         }
     return render(request, 'sightings/stats.html', context)
+
