@@ -54,8 +54,8 @@ def update(request,Unique_Squirrel_Id):
     return render(request, 'sightings/update.html', context)
 
 def get_stats(request):
-    AM_shift = 0
-    PM_shift = 0
+    am_shift = 0
+    pm_shift = 0
     adult = 0
     juvenile = 0
     running = 0
@@ -70,9 +70,9 @@ def get_stats(request):
 
     for squirrel in Sight.objects.all():
         if squirrel.Shift == 'AM':
-            AM_shift += 1
+            am_shift += 1
         if squirrel.Shift == 'PM':
-            PM_shift += 1
+            pm_shift += 1
         if squirrel.Age == 'Adult':
             adult += 1
         if squirrel.Age == 'Juvenile':
