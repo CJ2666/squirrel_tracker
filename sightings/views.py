@@ -3,7 +3,7 @@ from .models import Sight
 from django.shortcuts import redirect,get_object_or_404
 from .forms import SightForm
 from django.db.models import Avg, Max, Min, Count
-
+from django.http import HttpResponse
 # Create your views here.
 
 def homepage(request):
@@ -23,7 +23,7 @@ def sighting(request):
             'squirrels': squirrel,
             'fields':fields
         }
-    return render(request, 'sightings/sightings.html',context)
+    return render(request, 'sightings/list.html',context)
 
 def add_squirrel(request):
     if request.method == "POST":
@@ -53,9 +53,7 @@ def update(request,Unique_Squirrel_Id):
             }
     return render(request, 'sightings/update.html', context)
 
-def stats(request):
-    squirrels= Sight.objects.all()
-    Total = len(squirrels)
+def get_stats(request):
     AM_shift = 0
     PM_shift = 0
     adult = 0
@@ -70,7 +68,7 @@ def stats(request):
     tail_flags = 0
     tail_switches = 0
 
-    for squirrel in squirrels:
+    for squirrel in Sight.objects.all():
         if squirrel.Shift == 'AM':
             AM_shift += 1
         if squirrel.Shift == 'PM':
@@ -99,7 +97,6 @@ def stats(request):
             tail_switches += 1
 
     context = {
-        'Total': Total,
         'adult': adult,
         'juvenile': juvenile,
         'AM_shift': AM_shift,
