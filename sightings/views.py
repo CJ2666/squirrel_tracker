@@ -50,3 +50,4 @@ def update(request,Unique_Squirrel_Id):
             'form':form,
             }
     return render(request, 'sightings/update.html', context)
+
