@@ -53,7 +53,7 @@ def update(request,Unique_Squirrel_Id):
             }
     return render(request, 'sightings/update.html', context)
 
-def get_stats(request):
+def stats(request):
     am_shift = 0
     pm_shift = 0
     adult = 0
@@ -99,8 +99,8 @@ def get_stats(request):
     context = {
         'adult': adult,
         'juvenile': juvenile,
-        'AM_shift': AM_shift,
-        'PM_shift': PM_shift,
+        'am_shift': am_shift,
+        'pm_shift': pm_shift,
         'running': running,
         'climbing': climbing,
         'eating': eating,
@@ -109,6 +109,6 @@ def get_stats(request):
         'quaas': quaas,
         'moans': moans,
         'tail_flags': tail_flags,
-        'tail_twitches': tail_twitches,
+        'tail_switches': tail_switches,
         }
-    return render(request, 'sightings/stats.html', context)
+    return render(request, 'sightings/stats.html',context)
