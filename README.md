@@ -42,5 +42,5 @@ Squirrel Tracker provides some interesting stats to users for fun.
 <br />
 
 ## Contributors
-- Group Name: Zichan & Chengqian
+- Group Name: Zichan & Chengqian, Section 1
 - UNIs: [zl2947, cj2666]
